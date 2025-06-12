@@ -4,9 +4,11 @@ obj/
 **/obj/
 *.user
 *.vs/
-# Angular build output
+
 dist/
 src/ClinicManagement.Client/node_modules/
 
 # Ignore icon files
 **/*.ico
+
+
