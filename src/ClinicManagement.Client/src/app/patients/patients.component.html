@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <form (ngSubmit)="add()" [formGroup]="form" class="row g-3 align-items-end">
+    <div class="col-auto">
+      <input type="text" class="form-control" placeholder="Name" formControlName="name" />
+    </div>
+    <div class="col-auto">
+      <input type="date" class="form-control" formControlName="dateOfBirth" />
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Add</button>
+    </div>
+  </form>
+
+  <table class="table mt-4" *ngIf="patients.length">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of patients">
+        <td>{{ p.name }}</td>
+        <td>{{ p.dateOfBirth | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
