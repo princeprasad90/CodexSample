@@ -1,0 +1,37 @@
+<h2>Appointments</h2>
+<form [formGroup]="form" (ngSubmit)="add()" class="mb-3">
+  <div class="row g-2">
+    <div class="col">
+      <label class="form-label">Patient ID</label>
+      <input formControlName="patientId" type="number" class="form-control" />
+    </div>
+    <div class="col">
+      <label class="form-label">Date</label>
+      <input formControlName="date" type="date" class="form-control" />
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <input formControlName="description" class="form-control" />
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Add Appointment</button>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Patient</th>
+      <th>Date</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of appointments">
+      <td>{{ a.id }}</td>
+      <td>{{ a.patientId }}</td>
+      <td>{{ a.date | date: 'shortDate' }}</td>
+      <td>{{ a.description }}</td>
+    </tr>
+  </tbody>
+</table>
