@@ -4,3 +4,11 @@ obj/
 **/obj/
 *.user
 *.vs/
+
+dist/
+src/ClinicManagement.Client/node_modules/
+
+# Ignore icon files
+**/*.ico
+
+

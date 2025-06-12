@@ -10,4 +10,4 @@ dotnet build ClinicManagement.sln
 ## Running
 ```
 dotnet run --project src/ClinicManagement.Api
-```
+
