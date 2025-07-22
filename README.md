@@ -10,6 +10,13 @@ dotnet build ClinicManagement.sln
 ## Running
 ```
 dotnet run --project src/ClinicManagement.Api
+```
 
 It includes pages for patient and appointment management as well as simple
 registration and login forms so the UI can grow as the API expands.
+
+## API
+
+### `GET /patients/{id}`
+
+Returns details for a specific patient including any appointments.

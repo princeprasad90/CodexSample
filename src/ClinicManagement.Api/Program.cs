@@ -30,6 +30,9 @@ app.MapPost("/patients", async (AddPatientCommand command, IMediator mediator) =
 app.MapGet("/patients", async (IMediator mediator) =>
     Results.Ok(await mediator.Send(new GetPatientsQuery())));
 
+app.MapGet("/patients/{id:int}", async (int id, IMediator mediator) =>
+    Results.Ok(await mediator.Send(new GetPatientByIdQuery(id))));
+
 app.MapPost("/appointments", async (AddAppointmentCommand command, IMediator mediator) =>
     Results.Ok(await mediator.Send(command)));
 
