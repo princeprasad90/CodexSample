@@ -1,6 +1,7 @@
 using ClinicManagement.Api;
 using ClinicManagement.Api.Features.Appointments;
 using ClinicManagement.Api.Features.Patients;
+using ClinicManagement.Api.Features.Users;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,21 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.EnsureCreated();
+    if (!db.Users.Any())
+    {
+        db.Users.Add(new ClinicManagement.Api.Domain.User
+        {
+            UserName = "admin",
+            PasswordHash = PasswordUtils.HashPassword("Password123")
+        });
+        db.SaveChanges();
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -35,5 +51,14 @@ app.MapPost("/appointments", async (AddAppointmentCommand command, IMediator med
 
 app.MapGet("/appointments", async (int? patientId, IMediator mediator) =>
     Results.Ok(await mediator.Send(new GetAppointmentsQuery(patientId))));
+
+app.MapPost("/login", async (LoginCommand command, IMediator mediator) =>
+{
+    var token = await mediator.Send(command);
+    return token is null ? Results.Unauthorized() : Results.Ok(new { token });
+});
+
+app.MapPost("/change-password", async (ChangePasswordCommand command, IMediator mediator) =>
+    await mediator.Send(command) ? Results.Ok() : Results.BadRequest());
 
 app.Run();
